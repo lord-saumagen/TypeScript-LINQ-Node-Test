@@ -1,0 +1,17 @@
+{
+  "name": "TS_2.0_Linq_Node_Test",
+  "version": "1.0.0",
+  "description": "mocha test running on node for the typescript-linq V1.0.0 npm package.",
+  "scripts": {
+    "test": "node node_modules/mocha/bin/mocha"
+  },
+  "author": {
+    "name": "lord.saumagen@gmail.com"
+  },
+  "license": "MS-PL",
+  "engines": {},
+  "dependencies": {
+    "mocha": "^3.0.2",
+    "typescript-linq": "^1.0.0"
+  }
+}

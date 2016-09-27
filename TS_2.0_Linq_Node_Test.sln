@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "TS_2.0_Linq_Node_Test", "TS_2.0_Linq_Node_Test.njsproj", "{B44AFB5D-EA3F-4A62-900D-06A496E1CCC2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B44AFB5D-EA3F-4A62-900D-06A496E1CCC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B44AFB5D-EA3F-4A62-900D-06A496E1CCC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B44AFB5D-EA3F-4A62-900D-06A496E1CCC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B44AFB5D-EA3F-4A62-900D-06A496E1CCC2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
