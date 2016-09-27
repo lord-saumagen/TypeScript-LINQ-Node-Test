@@ -12,7 +12,7 @@
  - TypeScript V1.8.34
  - Node.js Tools V1.2
  
-The **'mocha'** and **'typescript-linq'** packages are declared as dependencies in the **'package.json'** file. Use the npm packet manager in Visual Studio or run the npm cli command **"npm install"** in the project root directory to install them.
+The **'mocha'** and **'typescript-linq'** packages are declared as dependencies in the **'package.json'** file. Use the npm package manager in Visual Studio or run the npm cli command **"npm install"** in the project root directory to install them.
 
 The Node.js runtime can be installed with the latest setup program. 
 You will find it at: [nodejs.org](https://nodejs.org).
