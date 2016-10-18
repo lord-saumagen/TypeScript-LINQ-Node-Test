@@ -56,6 +56,7 @@
     <TypeScriptCompile Include="test\Linq_Enumerator_test.ts" />
     <TypeScriptCompile Include="test\Linq_Extensions_test.ts" />
     <TypeScriptCompile Include="test\Linq_OrderedEnumerator_test.ts" />
+    <TypeScriptCompile Include="test\Utils_Assert_test.ts" />
     <TypeScriptCompile Include="test\Utils_test.ts" />
   </ItemGroup>
   <ItemGroup>
@@ -66,7 +67,10 @@
     <Folder Include="test\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="test\Linq_Enumerator_test_plainjs.js" />
     <Compile Include="test\Linq_Extensions_test_plainjs.js" />
+    <Compile Include="test\Linq_OrderedEnumerator_test_plainjs.js" />
+    <Compile Include="test\Utils_test_plainjs.js" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />

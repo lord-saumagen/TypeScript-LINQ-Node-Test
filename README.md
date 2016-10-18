@@ -1,13 +1,13 @@
 # typescript-linq Node.js test with mocha.
  
- This is the test project for the npm package typescript-linq in version 1.0.0.
+ This is the test project for the npm package typescript-linq in version 1.0.2.
  The test suite is based on the 'mocha' test framwork. 
  
 ## Requirements 
 
  The rquirements for this test are:
  - mocha V3.0.2
- - typescript-linq V1.0.0
+ - typescript-linq V1.0.2
  - nodejs V6.6.0
  - TypeScript V1.8.34
  - Node.js Tools V1.2
