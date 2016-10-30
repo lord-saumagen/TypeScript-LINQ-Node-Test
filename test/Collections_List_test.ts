@@ -97,12 +97,12 @@ suite("TS.Collections.List", () =>
       }, TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for a call to the constructor with an array which holds null values when 'allowNull' is set to false.");
     });
 
-    test("The call should fail with a \"TS.InvalidTypeException\" for a call to the constructor with an invalid 'allowNull' argument.", () =>
+    test("The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for a call to the constructor with an invalid 'allowNull' argument.", () =>
     {
       assert.throws(() =>
       {
         new TS.Collections.List(null, TS.Linq.Enumerator.Empty);
-      }, TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for a call to the constructor with an invalid 'allowNull' argument.");
+      }, TS.ArgumentNullOrUndefinedException, "The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for a call to the constructor with a null 'allowNull' argument.");
     });
 
   });

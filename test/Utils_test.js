@@ -3,6 +3,7 @@
 /// <reference path="../Scripts/typings/node/node.d.ts" />
 const assert = require('assert');
 const TS_1 = require('../node_modules/typescript-linq/TS');
+const DATA = require('./DATA');
 suite("TS.Utils", () => {
     class TestConstructorCallClass {
         constructor(ID = "1") {
@@ -197,11 +198,11 @@ suite("TS.Utils", () => {
         test("The call should fail with a \"TS.InvalidTypeException\" for a number 'parameter' argument.", () => {
             assert.throws(() => { TS_1.TS.Utils.checkArrayLikeParameter("number", 5.4, "checkArrayLikeParameter"); }, TS_1.TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for a number 'parameter' argument.");
         });
-        test("The call should fail with a \"TS.InvalidTypeException\" for a null 'parameter' argument.", () => {
-            assert.throws(() => { TS_1.TS.Utils.checkArrayLikeParameter("null", null, "checkArrayLikeParameter"); }, TS_1.TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for a null 'parameter' argument.");
+        test("The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for a null 'parameter' argument.", () => {
+            assert.throws(() => { TS_1.TS.Utils.checkArrayLikeParameter("null", null, "checkArrayLikeParameter"); }, TS_1.TS.ArgumentNullOrUndefinedException, "The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for a null 'parameter' argument.");
         });
-        test("The call should fail with a \"TS.InvalidTypeException\" for an undefined 'parameter' argument.", () => {
-            assert.throws(() => { TS_1.TS.Utils.checkArrayLikeParameter("undefined", undefined, "checkArrayLikeParameter"); }, TS_1.TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for an undefined 'parameter' argument.");
+        test("The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for an undefined 'parameter' argument.", () => {
+            assert.throws(() => { TS_1.TS.Utils.checkArrayLikeParameter("undefined", undefined, "checkArrayLikeParameter"); }, TS_1.TS.ArgumentNullOrUndefinedException, "The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for an undefined 'parameter' argument.");
         });
     });
     suite("checkArrayParameter", () => {
@@ -245,15 +246,15 @@ suite("TS.Utils", () => {
         test("Should pass for a parameter value which is the boolean false.", () => {
             TS_1.TS.Utils.checkBooleanParameter("false", false, "checkBooleanParameter");
         });
-        test("The call should fail with a \"TS.InvalidTypeException\" for a null 'parameter' argument.", () => {
+        test("The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for a null 'parameter' argument.", () => {
             assert.throws(() => {
                 TS_1.TS.Utils.checkBooleanParameter("null", null, "checkBooleanParameter");
-            }, TS_1.TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for a null 'parameter' argument.");
+            }, TS_1.TS.ArgumentNullOrUndefinedException, "The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for a null 'parameter' argument.");
         });
-        test("The call should fail with a \"TS.InvalidTypeException\" for an undefined 'parameter' argument.", () => {
+        test("The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for an undefined 'parameter' argument.", () => {
             assert.throws(() => {
                 TS_1.TS.Utils.checkBooleanParameter("undefined", undefined, "checkBooleanParameter");
-            }, TS_1.TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for an undefined 'parameter' argument.");
+            }, TS_1.TS.ArgumentNullOrUndefinedException, "The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for an undefined 'parameter' argument.");
         });
         test("The call should fail with a \"TS.InvalidTypeException\" for an object 'parameter' argument.", () => {
             assert.throws(() => {
@@ -379,6 +380,48 @@ suite("TS.Utils", () => {
             }, TS_1.TS.ArgumentNullOrUndefinedException, "The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for a parameter value which is undefined.");
         });
     });
+    suite("checkInstanceOf", () => {
+        let testObj0;
+        let testLiteralObj;
+        testLiteralObj =
+            {
+                Address: "Main Street 20",
+                City: "Vienna",
+                CompanyName: "Making Money",
+                ContactName: "Call me",
+                ContactTitle: "",
+                Country: "Austria",
+                CustomerID: "42",
+                Fax: "1234",
+                Phone: "555-555",
+                PostalCode: "12345",
+                Region: "NW"
+            };
+        test("Should pass for a parameter value wich is an instance of the specified type.", () => {
+            testObj0 = new DATA.DATA.Customer("Main Street 20", "Vienna", "Making Money", "Call me", "", "Austria", "42", "1234", "555-555", "12345", "NW");
+            TS_1.TS.Utils.checkInstanceOf("testObj0", testObj0, DATA.DATA.Customer, "checkInstanceOf");
+        });
+        test("The call should fail with a \"TS.InvalidTypeException\" for a parameter value which is a literal boject.", () => {
+            assert.throws(() => {
+                TS_1.TS.Utils.checkInstanceOf("testLiteralObj", testLiteralObj, DATA.DATA.Customer, "checkInstanceOf");
+            }, TS_1.TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for a parameter value which is a literal boject.");
+        });
+        test("The call should fail with a \"TS.InvalidInvocationException\" for a type parameter value which is a literal boject.", () => {
+            assert.throws(() => {
+                TS_1.TS.Utils.checkInstanceOf("testObj0", testObj0, testLiteralObj, "checkInstanceOf");
+            }, TS_1.TS.InvalidInvocationException, "The call should fail with a \"TS.InvalidInvocationException\" for a type parameter value which is a literal boject.");
+        });
+        test("The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for a null parameter value.", () => {
+            assert.throws(() => {
+                TS_1.TS.Utils.checkInstanceOf("null", null, DATA.DATA.Customer, "checkInstanceOf");
+            }, TS_1.TS.ArgumentNullOrUndefinedException, "The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for a null parameter value.");
+        });
+        test("The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for an undefined parameter value.", () => {
+            assert.throws(() => {
+                TS_1.TS.Utils.checkInstanceOf("undefined", undefined, DATA.DATA.Customer, "checkInstanceOf");
+            }, TS_1.TS.ArgumentNullOrUndefinedException, "The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for an undefined parameter value.");
+        });
+    });
     suite("checkIterableParameter", () => {
         test("Should pass for a parameter value which is an array.", () => {
             TS_1.TS.Utils.checkIterableParameter("array", [1, 2, 3, 4, 5], "checkIterableParameter");
@@ -391,15 +434,15 @@ suite("TS.Utils", () => {
                 TS_1.TS.Utils.checkIterableParameter("object", {}, "checkIterableParameter");
             }, TS_1.TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for an object 'parameter' argument.");
         });
-        test("The call should fail with a \"TS.InvalidTypeException\" for a null 'parameter' argument.", () => {
+        test("The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for a null 'parameter' argument.", () => {
             assert.throws(() => {
                 TS_1.TS.Utils.checkIterableParameter("null", null, "checkIterableParameter");
-            }, TS_1.TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for a null 'parameter' argument.");
+            }, TS_1.TS.ArgumentNullOrUndefinedException, "The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for a null 'parameter' argument.");
         });
-        test("The call should fail with a \"TS.InvalidTypeException\" for an undefined 'parameter' argument.", () => {
+        test("The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for an undefined 'parameter' argument.", () => {
             assert.throws(() => {
                 TS_1.TS.Utils.checkIterableParameter("undefined", undefined, "checkIterableParameter");
-            }, TS_1.TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for an undefined 'parameter' argument.");
+            }, TS_1.TS.ArgumentNullOrUndefinedException, "The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for an undefined 'parameter' argument.");
         });
     });
     suite("checkKeyByteArray", () => {
@@ -432,17 +475,17 @@ suite("TS.Utils", () => {
                 TS_1.TS.Utils.checkKeyByteArray("invallidArray", testArray24, "checkKeyByteArray");
             }, TS_1.TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for a call with an array which is not a valid unsigned byte array.");
         });
-        test("The call should fail with a \"TS.InvalidTypeException\" for a call with a null 'parameter' value.", () => {
+        test("The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for a call with a null 'parameter' value.", () => {
             assert.throws(() => {
                 testArray24[15] = null;
                 TS_1.TS.Utils.checkKeyByteArray("longArray", null, "checkKeyByteArray");
-            }, TS_1.TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for a call with a null 'parameter' value.");
+            }, TS_1.TS.ArgumentNullOrUndefinedException, "The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for a call with a null 'parameter' value.");
         });
-        test("The call should fail with a \"TS.InvalidTypeException\" for a call with an undefined 'parameter' value.", () => {
+        test("The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for a call with an undefined 'parameter' value.", () => {
             assert.throws(() => {
                 testArray24[15] = null;
                 TS_1.TS.Utils.checkKeyByteArray("longArray", undefined, "checkKeyByteArray");
-            }, TS_1.TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for a call with an undefined 'parameter' value.");
+            }, TS_1.TS.ArgumentNullOrUndefinedException, "The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for a call with an undefined 'parameter' value.");
         });
     });
     suite("checkNotEmptyParameter", () => {
@@ -627,15 +670,15 @@ suite("TS.Utils", () => {
                 TS_1.TS.Utils.checkUByteArrayParameter("noArray", {}, "checkUByteArrayParameter");
             }, TS_1.TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for a parameter value which isn't an array.");
         });
-        test("The call should fail with a \"TS.InvalidTypeException\" for a null parameter value.", () => {
+        test("The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for a null parameter value.", () => {
             assert.throws(() => {
                 TS_1.TS.Utils.checkUByteArrayParameter("null", null, "checkUByteArrayParameter");
-            }, TS_1.TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for a null parameter value.");
+            }, TS_1.TS.ArgumentNullOrUndefinedException, "The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for a null parameter value.");
         });
-        test("The call should fail with a \"TS.InvalidTypeException\" for an undefined parameter value.", () => {
+        test("The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for an undefined parameter value.", () => {
             assert.throws(() => {
                 TS_1.TS.Utils.checkUByteArrayParameter("undefined", undefined, "checkUByteArrayParameter");
-            }, TS_1.TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for an undefined parameter value.");
+            }, TS_1.TS.ArgumentNullOrUndefinedException, "The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for an undefined parameter value.");
         });
     });
     suite("checkUByteParameter", () => {
@@ -675,6 +718,74 @@ suite("TS.Utils", () => {
         test("The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for an undefined parameter value.", () => {
             assert.throws(() => {
                 TS_1.TS.Utils.checkUByteParameter("undefined", undefined, "checkUByteParameter");
+            }, TS_1.TS.ArgumentNullOrUndefinedException, "The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for an undefined parameter value.");
+        });
+    });
+    suite("checkUIntNumberParameter", () => {
+        test("Should pass for a parameter value which is a postitive integer number.", () => {
+            TS_1.TS.Utils.checkUIntNumberParameter("one", 1, "checkUnsignedIntegerNumberParameter");
+        });
+        test("Should pass for a parameter value which is MAX_VALUE of number.", () => {
+            TS_1.TS.Utils.checkUIntNumberParameter("MAX_SAFE_INTEGER", Number.MAX_SAFE_INTEGER, "checkUnsignedIntegerNumberParameter");
+        });
+        test("Should pass for a parameter value which is a number with the value '0'.", () => {
+            TS_1.TS.Utils.checkUIntNumberParameter("zero", 0, "checkUnsignedIntegerNumberParameter");
+        });
+        test("The call should fail with a \"TS.InvalidTypeException\" for a parameter value which is Number.MAX_VALUE.", () => {
+            assert.throws(() => {
+                TS_1.TS.Utils.checkUIntNumberParameter(".MAX_VALUE", Number.MAX_VALUE, "checkUnsignedIntegerNumberParameter");
+            }, TS_1.TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for a parameter value which is Number.MAX_VALUE.");
+        });
+        test("The call should fail with a \"TS.InvalidTypeException\" for a parameter value which is Number.POSITIVE_INFINITY.", () => {
+            assert.throws(() => {
+                TS_1.TS.Utils.checkUIntNumberParameter("POSITIVE_INFINITY", Number.POSITIVE_INFINITY, "checkUnsignedIntegerNumberParameter");
+            }, TS_1.TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for a parameter value which is Number.POSITIVE_INFINITY.");
+        });
+        test("The call should fail with a \"TS.InvalidTypeException\" for a parameter value which is a  floating point number.", () => {
+            assert.throws(() => {
+                TS_1.TS.Utils.checkUIntNumberParameter("zeroPointFive", 0.5, "checkUnsignedIntegerNumberParameter");
+            }, TS_1.TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for a parameter value which is a  floating point number.");
+        });
+        test("The call should fail with a \"TS.InvalidTypeException\" for a parameter value which is a negative integer number.", () => {
+            assert.throws(() => {
+                TS_1.TS.Utils.checkUIntNumberParameter("minusOne", -1, "checkUnsignedIntegerNumberParameter");
+            }, TS_1.TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for a parameter value which is a negative integer number.");
+        });
+        test("The call should fail with a \"TS.InvalidTypeException\" for a parameter value which is NaN.", () => {
+            assert.throws(() => {
+                TS_1.TS.Utils.checkUIntNumberParameter("NaN", Number.NaN, "checkUnsignedIntegerNumberParameter");
+            }, TS_1.TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for a parameter value which is NaN.");
+        });
+        test("The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for parameter value which is a null value.", () => {
+            assert.throws(() => {
+                TS_1.TS.Utils.checkUIntNumberParameter("null", null, "checkUnsignedIntegerNumberParameter");
+            }, TS_1.TS.ArgumentNullOrUndefinedException, "The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for parameter value which is a null value.");
+        });
+        test("The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for a parameter value which is undefined.", () => {
+            assert.throws(() => {
+                TS_1.TS.Utils.checkUIntNumberParameter("undefined", undefined, "checkUnsignedIntegerNumberParameter");
+            }, TS_1.TS.ArgumentNullOrUndefinedException, "The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for a parameter value which is undefined.");
+        });
+    });
+    suite("checkUInt64NumberParameter", () => {
+        test("Should pass for a call with a valid UInt64 number.", () => {
+            let uintNumber;
+            uintNumber = new TS_1.TS.TypeCode.UInt64(0xFFFFFFFF, 0xFFFFFFFF);
+            TS_1.TS.Utils.checkUInt64NumberParameter("UInt64", uintNumber, "checkUInt64NumberParameter");
+        });
+        test("The call should fail with a \"TS.InvalidTypeException\" for a parameter value which is not a UInt64 number.", () => {
+            assert.throws(() => {
+                TS_1.TS.Utils.checkUInt64NumberParameter("UInt64", 0, "checkUInt64NumberParameter");
+            }, TS_1.TS.InvalidTypeException, "The call should fail with a \"TS.InvalidTypeException\" for a parameter value which is not a UInt64 number.");
+        });
+        test("The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for a null parameter value.", () => {
+            assert.throws(() => {
+                TS_1.TS.Utils.checkUInt64NumberParameter("UInt64", null, "checkUInt64NumberParameter");
+            }, TS_1.TS.ArgumentNullOrUndefinedException, "The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for a null parameter value.");
+        });
+        test("The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for an undefined parameter value.", () => {
+            assert.throws(() => {
+                TS_1.TS.Utils.checkUInt64NumberParameter("UInt64", undefined, "checkUInt64NumberParameter");
             }, TS_1.TS.ArgumentNullOrUndefinedException, "The call should fail with a \"TS.ArgumentNullOrUndefinedException\" for an undefined parameter value.");
         });
     });
